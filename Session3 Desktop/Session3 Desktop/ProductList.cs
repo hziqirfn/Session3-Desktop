@@ -78,7 +78,7 @@ namespace Session3_Desktop
 
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if(e.ColumnIndex == 0)
+            if (e.ColumnIndex == 0)
             {
                 e.Value = "Edit";
             }
@@ -86,6 +86,25 @@ namespace Session3_Desktop
             {
                 e.Value = "Delete";
             }
+        }
+        
+        bool isAscending = true;
+
+        private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            var column = dataGridView1.Columns[e.ColumnIndex].DataPropertyName;
+
+            isAscending = !isAscending;
+            if (isAscending)
+            {
+                list = list.OrderBy(x => x.GetType().GetProperty(column).GetValue(x)).ToList();
+            }
+            else
+            {
+                list = list.OrderByDescending(x => x.GetType().GetProperty(column).GetValue(x)).ToList();
+            }
+            loadtable();
+
         }
     }
 }

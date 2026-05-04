@@ -72,5 +72,22 @@ namespace Session3_Desktop
                 this.Show();
             }
         }
+
+        bool isAscending = true;
+        private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            var column = dataGridView1.Columns[e.ColumnIndex].DataPropertyName;
+
+            isAscending = !isAscending;
+            if (isAscending)
+            {
+                list = list.OrderBy(x => x.GetType().GetProperty(column).GetValue(x)).ToList();
+            }
+            else
+            {
+                list = list.OrderByDescending(x => x.GetType().GetProperty(column).GetValue(x)).ToList();
+            }
+            loadtable();
+        }
     }
 }
